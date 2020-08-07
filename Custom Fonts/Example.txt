@@ -1,0 +1,14 @@
+protected override void OnCreate(Bundle savedInstanceState)
+        {
+
+            base.OnCreate(savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            // Set our view from the "main" layout resource
+            SetContentView(Resource.Layout.activity_main);
+            //Add The Font
+            Typeface MyFont = Typeface.CreateFromAsset(Application.Assets, "RobotoCondensed-Regular.ttf");
+            //Instance
+            Button MyButton = FindViewById<Button>(Resource.Id.button1);
+            //Set Button Font  
+            MyButton.Typeface = MyFont;
+            }
