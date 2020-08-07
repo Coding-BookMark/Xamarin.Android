@@ -1,3 +1,8 @@
+1-First You Must Download Font
+2-Import Font In Your Assetes Folder In Your Project
+3-Add Button Or TextView Any Control To Layout
+4-Open C# File For This Layout And Following This Code In Create() Method
+--------------------------------------------------------------------------
 protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -12,3 +17,4 @@ protected override void OnCreate(Bundle savedInstanceState)
             //Set Button Font  
             MyButton.Typeface = MyFont;
             }
+------------------------------------------------------------------------------
