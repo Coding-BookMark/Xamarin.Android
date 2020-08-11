@@ -1,21 +1,21 @@
 //Instance
 var mydialog = new Android.App.AlertDialog.Builder(this);
 //Add Dialog Title
-                mydialog.SetTitle("Dialog Title");
+mydialog.SetTitle("Dialog Title");
 //Dialog Message
-                mydialog.SetMessage("My Message");
+mydialog.SetMessage("My Message");
 //Dialog Icon
-                mydialog.SetIcon(Resource.Drawable.YourIconName);
+mydialog.SetIcon(Resource.Drawable.YourIconName);
 //Dialog Cancelable false or true 
-                mydialog.SetCancelable(true);
+mydialog.SetCancelable(true);
 //Add Button
-                mydialog.SetPositiveButton("Close Dialog", delegate
-                {
-
-                });
+{
+//There is no need to add event to close dialog The Dialog will be closed automatically when you click this button
+});
 //Show Dialog
-                mydialog.Show();
+mydialog.Show();
 
 
 --------------------------------------------------------------------------
 For More Information About SetCancelable See This Video on My Channel
+https://youtu.be/-jChb8Jtoj4
