@@ -2,7 +2,7 @@ Okey Sir
 
 This Activity_Main Layout its have the ListView
 
-`<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,12 +20,27 @@ This Activity_Main Layout its have the ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView1" />
-</RelativeLayout>`
-
-
+</RelativeLayout>
+-----------------------------------------------------
 This  MainActivity.cs File
+-----------------------------------------------------
+using Android.App;
+using Android.OS;
+using Android.Support.V7.App;
+using Android.Runtime;
+using Android.Widget;
+using System.Collections.Generic;
+using Android.Views;
+using Android.Graphics.Drawables;
+using System.Drawing;
+using Android.Graphics;
+using Android.Content.Res;
 
-        `
+namespace Custom_List_View
+{
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    public class MainActivity : AppCompatActivity
+    {
         ListView listview1;
         List<TableItem> tableItems;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -35,7 +50,7 @@ This  MainActivity.cs File
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
             tableItems = new List<TableItem>();
-            //some data 
+            //data 
             tableItems.Add(new TableItem("Hello", "Text Test", "33 views", Resource.Drawable.coin));
             tableItems.Add(new TableItem("Hello2", "Text Test 2", "55 views", Resource.Drawable.coin));
             listview1 = FindViewById<ListView>(Resource.Id.listView1);
@@ -101,11 +116,20 @@ This  MainActivity.cs File
             var t = tableItems[e.Position];
             Toast.MakeText(this, t.SubHeading, ToastLength.Short).Show();
 
-        }`
-       
-Now This Layout Design its Name (News.xml) and this layout have the design of items 
+        }
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-`<?xml version="1.0" encoding="utf-8"?>
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+}
+---------------------------------------------------------------
+Now This Layout Design its Name (News.xml) and this layout have the design of items 
+--------------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -156,11 +180,4 @@ Now This Layout Design its Name (News.xml) and this layout have the design of it
             android:id="@+id/imageView1"
             android:layout_marginTop="50px" />
     </android.support.v7.widget.CardView>
-</LinearLayout>`
-
-Im Try to use    Typeface face = Typeface.CreateFromAsset(context.Assets, "TajawalRegular.ttf"); 
-but i there is problem when i add typeface in GetView Method
-
-anyway it showing just like this screenshot :)
-
-![](https://us.v-cdn.net/5019960/uploads/editor/uy/rfhkqti9goth.jpg "")
+</LinearLayout>
