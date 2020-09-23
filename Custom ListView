@@ -1,0 +1,166 @@
+Okey Sir
+
+This Activity_Main Layout its have the ListView
+
+`<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <ListView
+        android:minWidth="25px"
+        android:clickable="false"
+       android:listSelector="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView1" />
+</RelativeLayout>`
+
+
+This  MainActivity.cs File
+
+        `
+        ListView listview1;
+        List<TableItem> tableItems;
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            // Set our view from the "main" layout resource
+            SetContentView(Resource.Layout.activity_main);
+            tableItems = new List<TableItem>();
+            //some data 
+            tableItems.Add(new TableItem("Hello", "Text Test", "33 views", Resource.Drawable.coin));
+            tableItems.Add(new TableItem("Hello2", "Text Test 2", "55 views", Resource.Drawable.coin));
+            listview1 = FindViewById<ListView>(Resource.Id.listView1);
+            listview1.Adapter = new HomeScreenAdapter(this, tableItems);
+            listview1.ItemClick += OnListItemClick;
+        } 
+
+        public class TableItem
+        {
+            public string Heading;
+            public string SubHeading;
+            public string views;
+            public int ImageResourceId;
+            public TableItem(string Heading, string SubHeading,string views, int ImageResourceId)
+            {
+                this.Heading = Heading;
+                this.SubHeading = SubHeading;
+                this.views = views;
+                this.ImageResourceId = ImageResourceId;
+            }
+        }
+
+        public class HomeScreenAdapter : BaseAdapter<TableItem>
+        {
+            List<TableItem> items;
+            Activity context;
+            public HomeScreenAdapter(Activity context, List<TableItem> items)
+                : base()
+            {
+                this.context = context;
+                this.items = items;
+            }
+            public override long GetItemId(int position)
+            {
+                return position;
+            }
+            public override TableItem this[int position]
+            {
+                get { return items[position]; }
+            }
+            public override int Count
+            {
+                get { return items.Count; }
+            }
+            public override View GetView(int position, View convertView, ViewGroup parent)
+            {
+                var item = items[position];
+                View view = convertView;
+                if (view == null) // no view to re-use, create new
+                view = context.LayoutInflater.Inflate(Resource.Layout.News, null);
+                view.FindViewById<TextView>(Resource.Id.textView1).Text = item.Heading;
+                view.FindViewById<TextView>(Resource.Id.textView2).Text = item.SubHeading;
+                view.FindViewById<TextView>(Resource.Id.textView3).Text = item.views;
+                view.FindViewById<ImageView>(Resource.Id.imageView1).SetImageResource(item.ImageResourceId);
+                return view;
+            }
+        }
+
+        //Get Item Selected Event
+        void OnListItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            var listview1 = sender as ListView;
+            var t = tableItems[e.Position];
+            Toast.MakeText(this, t.SubHeading, ToastLength.Short).Show();
+
+        }`
+       
+Now This Layout Design its Name (News.xml) and this layout have the design of items 
+
+`<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@android:color/transparent"
+    android:background="@android:color/transparent">
+    <android.support.v7.widget.CardView
+        android:minWidth="25px"
+        android:minHeight="180px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        android:layout_marginTop="10px"
+        android:elevation="109dp"
+        android:layout_marginBottom="20px"
+        android:clickable="true"
+        android:id="@+id/cardView1"
+        android:focusable="auto">
+        <TextView
+            android:text="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/textView1"
+            android:textAlignment="center" />
+        <TextView
+            android:text="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10px"
+            android:gravity="left"
+            android:id="@+id/textView2" />
+        <TextView
+            android:text="3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/textView3"
+            android:textAlignment="gravity"
+            android:foregroundGravity="right"
+            android:gravity="right"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="10px" />
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView1"
+            android:layout_marginTop="50px" />
+    </android.support.v7.widget.CardView>
+</LinearLayout>`
+
+Im Try to use    Typeface face = Typeface.CreateFromAsset(context.Assets, "TajawalRegular.ttf"); 
+but i there is problem when i add typeface in GetView Method
+
+anyway it showing just like this screenshot :)
+
+![](https://us.v-cdn.net/5019960/uploads/editor/uy/rfhkqti9goth.jpg "")
