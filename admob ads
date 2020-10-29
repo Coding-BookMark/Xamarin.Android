@@ -1,0 +1,76 @@
+Layout Xml File
+-----------------------
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+      <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-9374626566549364/8342451928"
+        >
+    </com.google.android.gms.ads.AdView>
+</RelativeLayout>
+
+Manifest File
+--------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.testmoney" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="18" android:targetSdkVersion="28" />
+	<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme">
+		<activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:theme="@android:style/Theme.Translucent" />
+	 <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9374626566549364~4675164492"/>
+  </application>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+</manifest>
+
+Main C# File
+---------------
+using Android.App;
+using Android.OS;
+using Android.Support.V7.App;
+using Android.Runtime;
+using Android.Widget;
+using Android.Gms.Ads;
+[assembly: UsesPermission(Android.Manifest.Permission.Internet)]
+[assembly: UsesPermission(Android.Manifest.Permission.AccessNetworkState)]
+namespace TestMoney
+{
+    [System.Obsolete]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    public class MainActivity : AppCompatActivity
+    {
+        AdActivity adActivity = new AdActivity();
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            // Set our view from the "main" layout resource
+            SetContentView(Resource.Layout.activity_main);
+            string id = "ca-app-pub-9374626566549364~4675164492";
+            global::Android.Gms.Ads.MobileAds.Initialize(ApplicationContext, id);
+            AdView adView = FindViewById<AdView>(Resource.Id.adView);
+            AdRequest adRequest = new AdRequest.Builder().Build();
+            adView.LoadAd(adRequest);
+        }
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+}
